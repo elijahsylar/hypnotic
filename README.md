@@ -1,5 +1,7 @@
 # HYPNOTIC
 
+[![CI](https://github.com/elijahsylar/hypnotic/actions/workflows/ci.yml/badge.svg)](https://github.com/elijahsylar/hypnotic/actions/workflows/ci.yml)
+
 A fullscreen, low-latency audio visualizer for focused listening. It turns whatever is playing (an audiobook, a lecture, a podcast, music) into one large, slowly evolving pattern, and can optionally show a single spoken keyword at a time. It is aimed at listeners who keep their attention on audio more easily when their eyes have something calm and responsive to rest on, including many people with ADHD.
 
 ![Demo: all seven effects, driven by the built-in synthetic signal](docs/hypnotic-demo.gif)
