@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    env:
+      SDL_VIDEODRIVER: dummy
+      SDL_AUDIODRIVER: dummy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: PortAudio (needed to import sounddevice)
+        run: sudo apt-get update && sudo apt-get install -y libportaudio2
+      - run: pip install -r requirements.txt pytest
+      - name: Byte-compile
+        run: python -m compileall -q hypnotic.py tests
+      - run: python -m pytest -q
