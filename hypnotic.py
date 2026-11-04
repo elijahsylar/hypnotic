@@ -539,7 +539,8 @@ class SpeechRecognizer:
         now = pygame.time.get_ticks()
         display = []
         
-        for w in self.keywords:
+        # list(): the speech thread may append while we iterate
+        for w in list(self.keywords):
             age = now - w["time"]
             if age < max_age_ms:
                 fade = 1.0 - (age / max_age_ms)
@@ -1122,6 +1123,7 @@ def main(argv=None):
     # Get display info for fullscreen
     info = pygame.display.Info()
     W, H = info.current_w, info.current_h
+    NATIVE_W, NATIVE_H = W, H   # F returns to this size, not the window size
     
     if FULLSCREEN and not args.windowed and not args.record:
         screen = pygame.display.set_mode((W, H), pygame.FULLSCREEN)
@@ -1199,6 +1201,7 @@ def main(argv=None):
                 elif event.key == pygame.K_f:
                     is_fullscreen = not is_fullscreen
                     if is_fullscreen:
+                        W, H = NATIVE_W, NATIVE_H
                         screen = pygame.display.set_mode((W, H), pygame.FULLSCREEN)
                     else:
                         screen = pygame.display.set_mode((1280, 720))
