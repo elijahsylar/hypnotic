@@ -28,7 +28,6 @@ First-time setup for speech recognition:
 """
 
 import numpy as np
-import sounddevice as sd
 import pygame
 import sys
 import math
@@ -137,6 +136,10 @@ class AudioEngine:
     def start(self, device_index):
         """Start audio stream."""
         try:
+            # Imported here, not at module level: importing sounddevice
+            # initializes PortAudio, which fails on a machine with no audio
+            # server. --demo and the tests must not depend on that.
+            import sounddevice as sd
             self.stream = sd.InputStream(
                 device=device_index,
                 channels=1,
@@ -1108,6 +1111,7 @@ def main(argv=None):
     print("=" * 50)
 
     if args.list:
+        import sounddevice as sd
         devices = sd.query_devices()
         print("\nAudio Devices:")
         for i, d in enumerate(devices):

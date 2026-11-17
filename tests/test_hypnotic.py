@@ -96,3 +96,12 @@ class TestHelpers:
 def test_demo_run_renders_frames(tmp_path):
     h.main(["--demo", "--record", str(tmp_path), "--frames", "5"])
     assert len(list(tmp_path.glob("frame_*.png"))) == 5
+
+
+def test_demo_run_needs_no_audio_backend(tmp_path, monkeypatch):
+    """--demo must work where PortAudio cannot start (a CI runner, a server).
+    A None entry in sys.modules makes any `import sounddevice` raise."""
+    assert "sounddevice" not in vars(h), "sounddevice must not be imported at module level"
+    monkeypatch.setitem(sys.modules, "sounddevice", None)
+    h.main(["--demo", "--record", str(tmp_path), "--frames", "2"])
+    assert len(list(tmp_path.iterdir())) == 2

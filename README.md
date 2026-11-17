@@ -109,7 +109,7 @@ pip install pytest
 python -m pytest -q
 ```
 
-17 tests cover the block analysis (band placement for low and high tones, clamping, silence, peak decay), the demo signal, keyword selection, colour conversion, argument parsing, and a headless five-frame render. They run without an audio device or a display.
+18 tests cover the block analysis (band placement for low and high tones, clamping, silence, peak decay), the demo signal, keyword selection, colour conversion, argument parsing, a headless five-frame render, and a demo run with no audio backend available. They run without an audio device or a display.
 
 ## Project status
 
